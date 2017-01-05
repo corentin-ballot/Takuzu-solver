@@ -1,5 +1,3 @@
-package Projet.Takuzu;
-
 import java.util.Arrays;
 
 /**
@@ -222,7 +220,7 @@ public class Takuzu {
 		// Pour chaque ligne
 		for (int i = 0; i < j; i++) {
 			// Si deux lignes sont identique
-			if(grille[i].equals(grille[j]))
+			if(Arrays.equals(this.grille[i], this.grille[j]))
 				return false;
 		}
 		
@@ -239,7 +237,7 @@ public class Takuzu {
 		// Pour chaque ligne
 		for (int i = 0; i < j; i++) {
 			// Si deux lignes sont identique
-			if(grille[i].equals(grille[j]))
+			if(Arrays.equals(this.grille[i], this.grille[j]))
 				return false;
 		}
 		
@@ -247,21 +245,61 @@ public class Takuzu {
 	}
 	
 	public static void main(String[] args) {
-		//System.setOut(new PrintStream(new File("afile.txt")));
-		
-		//int[][] grille = {{-1, 1, -1, 0}, {-1, -1, 0, -1}, {-1, 0, -1, -1}, {1, 1, -1, 0}};
-		// Solution : {[0, 1, 1, 0], [1, 0, 0, 1], [0, 0, 1, 1], [1, 1, 0, 0]}
-		
-		int[][] grille = {{-1, 0, -1, 0, -1, -1, -1, 0, 0, -1},{-1, -1, -1, 0, -1, -1, -1, 0, -1, 0},{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},{-1, 0, -1, -1, -1, -1, -1, -1, -1, 0},{-1, -1, -1, -1, 0, -1, -1, -1, -1, -1},{0, -1, -1, -1, -1, -1, -1, -1, 0, 0},{-1, -1, -1, -1, 0, -1, -1, -1, -1, -1},{-1, -1, 0, -1, 1, -1, -1, -1, 0, 0},{-1, -1, -1, -1, 1, 0, -1, -1, -1, -1},	{-1, 0, -1, -1, -1, 0, -1, -1, 0, 0}};
-		// Solution : {[1, 0, 1, 0, 0, 1, 1, 0, 0, 1], [0, 1, 1, 0, 1, 1, 0, 0, 1, 0], [0, 1, 0, 1, 0, 0, 1, 1, 0, 1], [1, 0, 0, 1, 1, 0, 0, 1, 1, 0], [1, 0, 1, 0, 0, 1, 0, 0, 1, 1], [0, 1, 0, 1, 1, 0, 1, 1, 0, 0], [0, 0, 1, 1, 0, 1, 0, 0, 1, 1], [1, 1, 0, 0, 1, 1, 0, 1, 0, 0], [0, 1, 0, 0, 1, 0, 1, 0, 1, 1], [1, 0, 1, 1, 0, 0, 1, 1, 0, 0]}
-		
-		Takuzu tak = new Takuzu(grille);
-		
-		long startTime, endTime;
-		startTime = System.currentTimeMillis();
-		System.out.println(tak.resolution());
-		endTime = System.currentTimeMillis();
-		System.out.println("Execution : " + (endTime - startTime) + " (millis) ");
+		if(args.length == 0){
+			System.out.println("java Takuzu: parametres de grille manquant.");
+			System.out.println("Saisissez \" java Takuzu --help \" pour plus d'informations.");
+			System.exit(0);
+		} else if(args[0].equals("--help")){
+			System.out.println("Utilisation : java Takuzu L1 L2 L3 L4 ...");
+			System.out.println("Lancer la resolution de la grille de Takuzu passe en parametre.");
+			System.out.println("");
+			System.out.println("L1 correspond a la premiere ligne du Takuzu, L2 a la seconde, etc...");
+			System.out.println("Les grilles doivent etre carre, et les lignes avoir un nombre pair de cases.");
+			System.out.println("Les lignes doivent suivre la syntaxe suivante : \" ?1?0 \". Le caractere representant une case vide est ici \" ? \", mais peut etre tremplace par n'importe quel caractere excepte \" 0 \", et \" 1 \".");
+			System.out.println("");
+			System.out.println("Exemple d'utilisation avec le Takuzu donne en exemple sur Wikipedia avec le caractere \" 2 \" comme separateur : java Takuzu 2120 2202 2022 1120");
+			System.exit(0);
+		} else {
+			if(args.length % 2 != 0 || args[0].length() != args.length){
+				System.out.println("java Takuzu: parametres de grille invalide.");
+				System.out.println("Saisissez \" java Takuzu --help \" pour plus d'informations.");
+				System.exit(0);
+			} else {
+				for (int i = 1; i < args.length; i++) {
+					if(args[0].length() != args[i].length()){
+						System.out.println("java Takuzu: parametres de grille invalide.");
+						System.out.println("Saisissez \" java Takuzu --help \" pour plus d'informations.");
+						System.exit(0);
+					}
+				}
+			}
+			
+			int[][] grille = new int[args.length][];
+			
+			for (int i = 0; i < grille.length; i++) {
+				int[] ligne = new int[args[i].length()];
+				for (int j = 0; j < ligne.length; j++) {
+					switch (args[i].charAt(j)) {
+						case '0': ligne[j] = 0; break;
+						case '1': ligne[j] = 1; break;
+						default: ligne[j] = -1; break;
+					}
+					grille[i] = ligne;
+				}
+			}
+			
+			Takuzu tak = new Takuzu(grille);
+			long startTime, endTime;
+			
+			startTime = System.currentTimeMillis();
+			Takuzu sol = tak.resolution();
+			endTime = System.currentTimeMillis();
+			
+			if(tak == null) System.out.println("Aucune solution trouve.");
+			else System.out.println("Solution : \n" + sol);
+			
+			System.out.println("Temps d'execution : " + (endTime - startTime) + " (millis) ");
+		}
 	}
 }
 
