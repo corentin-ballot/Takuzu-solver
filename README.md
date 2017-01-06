@@ -8,8 +8,8 @@ Le jeu japonais de Takuzu (parfois aussi appelé Binero) est un jeu de réflexio
 
 Voici un exemple, passant d'une grille partiellement pré-remplie à une grille remplie (source Wikipedia) :
 
-![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Takuzu_unsolved_grid.svg/120px-Takuzu_unsolved_grid.svg.png "grille partiellement pré-remplie")
-![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Takuzu_solved_grid.svg/120px-Takuzu_solved_grid.svg.png "une grille remplie")
+![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Takuzu_unsolved_grid.svg/120px-Takuzu_unsolved_grid.svg.png "Grille partiellement pré-remplie")
+![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Takuzu_solved_grid.svg/120px-Takuzu_solved_grid.svg.png "Grille remplie")
 
 ## Technique utilisée par le solver
 
@@ -60,7 +60,7 @@ La commande suivante permet d'obtenir l'usage du programme
 
 
 
-Les commandes permetent de lancer la résolution du Takuzu qui suit
+Les commandes suivante sont équivalente, et permettent de lancer la résolution du Takuzu qui suit
 
     java Takuzu 2120 2202 2022 1120
 
