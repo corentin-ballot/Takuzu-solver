@@ -54,17 +54,11 @@ Exemple avec la résolution de la première ligne du l'exemple donné plus haut 
 
 ## Utilisation du solver
 
-La commande suivante permet d'obtenir l'usage du programme
-
-    java Takuzu --help
-
-
-
 Les commandes suivante sont équivalente, et permettent de lancer la résolution du Takuzu qui suit
 
-    java Takuzu 2120 2202 2022 1120
-
-    java Takuzu .1?0 !:0A 80PL 11S0
+    java Takuzu --solve 2120 2202 2022 1120
+    java Takuzu --solve _1_0 __0_ _0__ 11_0
+    java Takuzu --solve .1?0 !:0A 80PL 11S0
 
 
 |   | 1 |   | 0 |
@@ -72,3 +66,88 @@ Les commandes suivante sont équivalente, et permettent de lancer la résolution
 |   |   | 0 |   |
 |   | 0 |   |   |
 | 1 | 1 |   | 0 |
+
+Le séparateur (correspondant à une case vide) n'est pas définit, seul les caractère "0" et "1" ne peuvent pas être utilisés en tant que tel puique réservé à des cases remplis.
+
+## Technique utilisée par le générateur
+
+Le générateur de Takuzu fait appel au solver avec un grille vide pour obtenir un Takuzu valide, tel que le suivant.
+
+| 0 | 0 | 1 | 1 |
+|:-:|:-:|:-:|:-:|
+| 0 | 1 | 0 | 1 |
+| 1 | 0 | 1 | 0 |
+| 1 | 1 | 0 | 0 |
+
+Il permute ensuite *n* fois (ou *n* correspond au nombre de ligne deu Takuzu) des lignes obtenu deux à deux aléatoirement du Takuzu, puis continue les permutation deux à deux aléatoirement jusqu'à obtention d'un Takuzu valide.
+
+| 1 | 0 | 1 | 0 |
+|:-:|:-:|:-:|:-:|
+| 0 | 1 | 0 | 1 |
+| 0 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 0 |
+
+*Cette grille est donnée à titre d'exemple, les permutations de lignes reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
+
+Pour finir, il effectue un parcours de la grille, et retire aléatoirement des cases.
+
+|   | 0 |   |   |
+|:-:|:-:|:-:|:-:|
+|   | 1 |   | 1 |
+|   | 0 |   |   |
+|   |   |   |   |
+
+*Cette grille est à nouveau donnée à titre d'exemple, le retrait des cases reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
+
+## Utilisation du générateur
+
+La commande suivante permet d'obtenir le Takuzu 4x4 partiellement pré-remplis qui suit :
+
+    java Takuzu --generate 4
+
+|   | 0 |   |   |
+|:-:|:-:|:-:|:-:|
+|   | 1 |   | 1 |
+|   | 0 |   |   |
+|   |   |   |   |
+
+*Cette grille est à nouveau donnée à titre d'exemple, la génération reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
+
+La commande suivante permet d'obtenir le Takuzu 10x10 partiellement pré-remplis qui suit :
+
+    java Takuzu --generate 10
+
+| 0 |   |   |   |   | 1 |   |   |   | 1 |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 0 |   |   |   |   | 1 |   |   |   | 1 |
+| 1 | 1 |   |   |   |   |   |   | 1 |   |
+|   |   |   |   | 1 |   | 0 | 1 |   |   |
+|   |   |   |   |   |   |   | 0 |   |   |
+|   | 1 |   |   |   |   |   |   | 0 |   |
+|   |   |   |   |   | 0 |   |   |   |   |
+|   |   | 1 |   | 1 |   |   |   | 0 | 1 |
+|   |   |   |   |   |   |   |   |   |   |
+|   |   | 1 | 0 |   |   | 1 |   |   |   |
+
+*Cette grille est à nouveau donnée à titre d'exemple, la génération reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
+
+Le taux de remplissage par défaut est de 0.25 (25% de la grille est pré-remplis). Ce taux peut être modifié comme suit :
+
+    java Takuzu --generate 10 1
+
+| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 0 | 1 |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 1 | 1 |
+| 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 1 | 1 | 0 | 0 | 1 | 0 | 0 |
+| 1 | 1 | 0 | 1 | 0 | 1 | 0 | 0 | 1 | 0 |
+| 1 | 1 | 0 | 1 | 0 | 0 | 1 | 0 | 1 | 0 |
+| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 1 |
+| 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1 | 0 | 0 |
+| 1 | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 0 | 0 |
+| 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
+
+
+*Le taux de remplissage à ici été remplacé par 1 (100% de la grille est pré-remplis)
+
+De plus, cette grille est à nouveau donnée à titre d'exemple, la génération reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
