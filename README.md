@@ -148,6 +148,6 @@ Le taux de remplissage par défaut est de 0.25 (25% de la grille est pré-rempli
 | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 1 | 0 | 1 |
 
 
-*Le taux de remplissage à ici été remplacé par 1 (100% de la grille est pré-remplis)
+*Le taux de remplissage à ici été remplacé par 1 (100% de la grille est pré-remplis)*
 
-De plus, cette grille est à nouveau donnée à titre d'exemple, la génération reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
+*De plus, cette grille est à nouveau donnée à titre d'exemple, la génération reposant sur l'utilisation de la class java.util.Random, le résultat ne peut être prévu sans connaitre la graine utilisé*
